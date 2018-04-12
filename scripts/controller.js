@@ -4,6 +4,7 @@ var TickerController = function(model, view) {
     this._snapshotUrl = './data/snapshot.csv';
     this._delatsUrl = './data/deltas.csv';
     this.init();
+    this._model.subscribe(this.blah);
 }
 
 TickerController.prototype = {
@@ -33,12 +34,18 @@ TickerController.prototype = {
     },
 
     snapshot: function(data) {
-        this._model.handleSnapshot(data);
-        return this;
+        this._model.addSnapshot(data);
+        //return this;
     },
 
     deltas: function(data) {
-        //console.log(data);
+        this._model.addDeltas(data);
     },
+
+    blah: function(el) {
+        console.log('controller knows data has loaded');
+        console.log(el, this);
+        //this._view.drawGrid();
+    }    
 
 }
