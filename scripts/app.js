@@ -1,4 +1,4 @@
-(function () {
+(function () { // polyfill custom event function for IE
     if ( typeof window.CustomEvent === "function" ) return false;
     function CustomEvent ( event, params ) {
         params = params || { bubbles: false, cancelable: false, detail: undefined };
@@ -10,6 +10,7 @@
     window.CustomEvent = CustomEvent;
 })();
 
-var model = new TickerModel(),
+var elem = document.querySelectorAll('.ticker')[0];
+var model = new TickerModel(elem),
     view = new TickerView(model),
     controller = new TickerController(model, view);

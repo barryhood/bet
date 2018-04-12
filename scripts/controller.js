@@ -4,13 +4,18 @@ var TickerController = function(model, view) {
     this._snapshotUrl = './data/snapshot.csv';
     this._delatsUrl = './data/deltas.csv';
     this.init();
-    this._model.subscribe(this.blah);
 }
 
 TickerController.prototype = {
     init: function() {
+        var that = this;
         this.fetchData(this._snapshotUrl, this.snapshot.bind(this));
         this.fetchData(this._delatsUrl, this.deltas.bind(this));
+
+        this._model._dispatcher.addEventListener('grid:ready', function(e) {
+            console.log('grid:ready', that);
+            that.startTicker();
+        });
     },
 
     fetchData: function(url, callback) {
@@ -35,17 +40,20 @@ TickerController.prototype = {
 
     snapshot: function(data) {
         this._model.addSnapshot(data);
-        //return this;
     },
 
     deltas: function(data) {
         this._model.addDeltas(data);
     },
 
-    blah: function(el) {
-        console.log('controller knows data has loaded');
-        console.log(el, this);
-        //this._view.drawGrid();
-    }    
+    startTicker: function() {
+        console.log(this._view.fetchTableRows(this._model._deltas[0]));
+
+        // TO DO: we need to do some kind of diff on the data, maybe overwrite snapshot
+        // with "current" view, then flag changed rows so we can e.g. add a "changed"
+        // transitional class
+
+
+    }
 
 }
