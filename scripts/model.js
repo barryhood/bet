@@ -7,15 +7,15 @@ var TickerModel = function(elem) {
     this._deltas = [];
     this._timers = [];
     this._inc = 0;
-}
+};
 
 TickerModel.prototype = {
     addSnapshot: function(data) {
         var rows = data.split(/\r\n|\r|\n/),
-        that = this;
+            that = this;
         this._labels = rows.shift().split(',');
         rows.forEach(function(row) {
-            if(row) {
+            if (row) {
                 that._current.push(row.split(','));
             }
         });
@@ -23,13 +23,13 @@ TickerModel.prototype = {
     },
     addDeltas: function(data) {
         var rows = data.split(/\r\n|\r|\n/),
-        that = this;
+            that = this;
         var inc = 0;
         that._deltas[0] = [];
         rows.forEach(function(row) {
-            if(row) {
+            if (row) {
                 row = row.split(',');
-                if(row.length === 1) {
+                if (row.length === 1) {
                     that._timers.push(row);
                     inc++;
                     that._deltas[inc] = [];
@@ -42,9 +42,9 @@ TickerModel.prototype = {
         this.dataLoaded();
     },
     dataLoaded: function() {
-        if(this._current.length && this._deltas.length) {
+        if (this._current.length && this._deltas.length) {
             var event = new Event('data:loaded');
             this._dispatcher.dispatchEvent(event);
         }
     }
-}
+};

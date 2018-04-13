@@ -1,70 +1,85 @@
 @import "normalize.css";
 
 .main {
-  padding: 40px;
-  display: flex;
-  justify-content: center;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
 }
 .ticker {
-  overflow-x: auto;
-  padding-bottom: 10px;
+    overflow-x: auto;
+    padding-bottom: 10px;
 }
 .ticker__table {
-  border-collapse: collapse;
-  border: 1px solid black;
+    border-collapse: collapse;
+    border: 1px solid black;
 }
-.ticker__table__title, 
+.ticker__table__title,
 .ticker__table__cell {
-  padding: 10px;
-  font: normal 12px Arial;
-  text-align: right;
+    padding: 10px;
+    font: normal 12px Arial;
+    text-align: right;
 }
 .ticker__table__title:nth-child(1),
 .ticker__table__cell:nth-child(1),
 .ticker__table__title:nth-child(2),
 .ticker__table__cell:nth-child(2) {
-  text-align: left;
+    text-align: left;
 }
 @media only screen and (min-width: 740px) {
-  .ticker__table__title, .ticker__table__cell {
-    padding: 10px 14px;
-    font-size: 14px;
-  }
+    .ticker__table__title,
+    .ticker__table__cell {
+        padding: 10px 14px;
+        font-size: 14px;
+    }
 }
 .ticker__table tr {
-  background: #fefefe;
-  transition: background 0.35s linear;
-  cursor: default;
+    background: #fefefe;
+    transition: background 0.35s linear;
+    cursor: default;
 }
 .ticker__table tr:nth-child(even) {
-  background: #ededed;
+    background: #ededed;
 }
 .ticker__table tr:hover {
-  background: #cdcdcd;
+    background: #cdcdcd;
 }
 .ticker__table__title {
-  color: white;
-  background: #4c4c4c;
-  background: linear-gradient(to bottom, #4c4c4c 0%, #595959 12%, #666666 25%, #474747 39%, #2c2c2c 50%, black 51%, #111111 60%, #2b2b2b 76%, #1c1c1c 91%, #131313 100%);
-  position: relative;
+    color: white;
+    background: #4c4c4c;
+    background: linear-gradient(
+        to bottom,
+        #4c4c4c 0%,
+        #595959 12%,
+        #666666 25%,
+        #474747 39%,
+        #2c2c2c 50%,
+        black 51%,
+        #111111 60%,
+        #2b2b2b 76%,
+        #1c1c1c 91%,
+        #131313 100%
+    );
+    position: relative;
 }
 .ticker__table__title::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 1px;
-  height: 100%;
-  background: white;
-  opacity: 0.3;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 100%;
+    background: white;
+    opacity: 0.3;
 }
 .ticker__table__cell {
-  border: 1px solid #999;
-  transition: background 0.35s linear;
-  min-width: 65px;
-  box-sizing: border-box;
+    border: 1px solid #999;
+    transition: background 0.35s linear;
+    min-width: 65px;
+    box-sizing: border-box;
+}
+.ticker__table__cell:nth-child(5) {
+  min-width: 80px;
 }
 .ticker__table__cell--updated {
-  background: honeydew;
+    background: honeydew;
 }
-

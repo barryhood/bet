@@ -4,7 +4,7 @@ var TickerController = function(model, view) {
     this._snapshotUrl = './data/snapshot.csv';
     this._delatsUrl = './data/deltas.csv';
     this.init();
-}
+};
 
 TickerController.prototype = {
     init: function() {
@@ -20,22 +20,22 @@ TickerController.prototype = {
 
     fetchData: function(url, callback) {
         var request = new XMLHttpRequest(),
-        that = this;
+            that = this;
         request.open('GET', url, true);
-        request.onreadystatechange = function () {
-            if(request.readyState === 4) {
-                if(request.status === 200 || request.status == 0) {
+        request.onreadystatechange = function() {
+            if (request.readyState === 4) {
+                if (request.status === 200 || request.status == 0) {
                     callback(request.responseText);
                 } else {
                     that.handleError('Error retrieving data:', request.statusText);
                 }
             }
-        }
+        };
         request.send(null);
     },
 
     handleError: function(text, status) {
-        console.log(text,status);
+        console.log(text, status);
     },
 
     snapshot: function(data) {
@@ -58,17 +58,14 @@ TickerController.prototype = {
         var that = this;
         setTimeout(function() {
             that._view.updateGrid(that._model._deltas[that._model._inc]);
-            that._model._inc = that._model._inc < that._model._timers.length ? that._model._inc+1 : 0;
+            that._model._inc =
+                that._model._inc < that._model._timers.length - 1 ? that._model._inc + 1 : 0;
             //console.log(that._model._timers[that._model._inc]);
-            if(that._model._inc < 6) {
+            //if (that._model._inc < 6) {
                 that.tickerTimer();
-            } else {
-                console.log('finished');
-            }
-            
+            //} else {
+            //    console.log('finished');
+            //}
         }, this._model._timers[this._model._inc]);
-
-
     }
-
-}
+};
