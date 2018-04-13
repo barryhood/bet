@@ -1,17 +1,22 @@
 @import "normalize.css";
 
 .main {
-    padding: 40px;
-    display: flex;
-    justify-content: center;
+    padding: 20px;
+    /* display: flex;
+    justify-content: center; */
 }
 .ticker {
-    overflow-x: auto;
-    padding-bottom: 10px;
+    overflow: auto;
+    padding: 20px;
+    width: 100%;
 }
 .ticker__table {
     border-collapse: collapse;
     border: 1px solid black;
+    table-layout: fixed;
+    width: 100%;
+    min-width: 600px;
+    max-width: 1200px;
 }
 .ticker__table__title,
 .ticker__table__cell {
@@ -25,23 +30,36 @@
 .ticker__table__cell:nth-child(2) {
     text-align: left;
 }
-/* @media only screen and (min-width: 740px) {
-    .ticker__table__title,
-    .ticker__table__cell {
-        padding: 10px 14px;
-        font-size: 14px;
-    }
-} */
-.ticker__table tr {
+.ticker__table__row {
     background: #fefefe;
     transition: background 0.35s linear;
     cursor: default;
 }
-.ticker__table tr:nth-child(even) {
+.ticker__table__row:nth-child(even) {
     background: #ededed;
 }
-.ticker__table tr:hover {
+.ticker__table__row:hover {
     background: #cdcdcd;
+}
+.ticker__table__row.ticker__table__row--decrease td:nth-child(3),
+.ticker__table__row.ticker__table__row--decrease td:nth-child(4),
+.ticker__table__row.ticker__table__row--decrease td:nth-child(5) {
+  background: rgba(255,228,225,0.75);
+}
+.ticker__table__row.ticker__table__row--increase td:nth-child(3),
+.ticker__table__row.ticker__table__row--increase td:nth-child(4),
+.ticker__table__row.ticker__table__row--increase td:nth-child(5) {
+  background: honeydew;
+}
+.ticker__table__row.ticker__table__row--decrease:hover td:nth-child(3),
+.ticker__table__row.ticker__table__row--decrease:hover td:nth-child(4),
+.ticker__table__row.ticker__table__row--decrease:hover td:nth-child(5) {
+  background: rgba(240,255,240, 0.75);
+}
+.ticker__table__row.ticker__table__row--increase:hover td:nth-child(3),
+.ticker__table__row.ticker__table__row--increase:hover td:nth-child(4),
+.ticker__table__row.ticker__table__row--increase:hover td:nth-child(5) {
+  background: rgba(240,255,240, 0.5);
 }
 .ticker__table__title {
     color: white;
@@ -71,34 +89,30 @@
     background: white;
     opacity: 0.3;
 }
+.ticker__table__title span,
+.ticker__table__cell span {
+  display: block;
+}
 .ticker__table__cell {
     border: 1px solid #999;
-    /* transition: background 0.35s linear; */
-    transition: opacity 0.35s linear;
     position: relative;
+    /* overflow: hidden; */
 }
-.ticker__table__cell {
-  overflow: hidden;
+.ticker__table__title:nth-child(3) span,
+.ticker__table__title:nth-child(4) span {
+  min-width: 60px;
 }
-.ticker__table__cell:nth-child(3),
-.ticker__table__cell:nth-child(4) {
-  width: 60px;
-}
-.ticker__table__cell:nth-child(5) {
-  width: 80px;
+.ticker__table__title:nth-child(5) span {
+  min-width: 80px;
 }
 .ticker__table__cell--updated {
     background: honeydew;
 }
-.transition {
-  /* transition: all 0.35s linear; */
-}
 .animate-in,
 .animate-out {
   animation-duration: 300ms;
-  animation-timing-function: linear; /* or: ease, ease-in, ease-in-out, linear, cubic-bezier(x1, y1, x2, y2) */
-  animation-fill-mode: both; /* or: backwards, both, none */
-  /* animation-delay: 2s; or: Xms */
+  animation-timing-function: linear;
+  animation-fill-mode: both;
   position: absolute;
   top: 10px;
   right: 14px;   
@@ -108,15 +122,9 @@
 }
 .animate-out {
   animation-name: animate-out;
-
-  /* opacity: 0;
-  transform: translateY(100%);
-  position: absolute;
-  top: 10px;
-  right: 14px;  */
 }
 
-@keyframes animate-in {
+@keyframes animate-in {  
   0%   { 
     transform: translateY(-100%);
     opacity: 0;
@@ -128,11 +136,23 @@
 }
 @keyframes animate-out {
   0%   { 
-    transform: translateY(0%); 
+    transform: translateY(0%) scale(1); 
     opacity: 1;
   }
-  100% { 
-    transform: translateY(100%); 
+  50% {
     opacity: 0;
   }
+  100% { 
+    transform: translateY(200%) scale(.75); 
+    opacity: 0;
+  }
+}
+
+.ticker__canvas {
+  border: 1px solid black;
+  margin: 20px auto 0;
+  display: block;
+  height: 300px;
+  width: 100%;
+  box-sizing: border-box;
 }

@@ -14,7 +14,11 @@ var TickerModel = function(elem) {
     this._eventTypes = {
         dataLoaded: 'data:loaded',
         gridReady : 'grid:ready',
-        gridUpdated : 'grid:updated'
+        gridUpdated : 'grid:updated',
+        gridCleanup: 'grid:cleaned'
+    }
+    this._cssClasses = {
+        
     }
 };
 
