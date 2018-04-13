@@ -32,18 +32,33 @@ TickerView.prototype = {
         var updatedRows = this.fetchTableRows(data, true);
         tbody.innerHTML = updatedRows;
         
+        //window.requestAnimationFrame(function() {
+
+        
         setTimeout(function() {
             var updates = tbody.querySelectorAll('.ticker__table__cell--will-update');
             [].forEach.call(updates, function (item) {
                 item.classList.remove('ticker__table__cell--will-update');
                 item.classList.add('ticker__table__cell--updated');
             });
+            setTimeout(function() {
+                that.cleanup();
+            }, 400);
+            
         }, 10);
-
+        //});
         
         // do a settimeout 350ms and call a clean up to remove updated classes
         var event = new Event('grid:update');
         this._model._dispatcher.dispatchEvent(event);
+    },
+
+    cleanup: function() {
+        var tbody = this._model._table.querySelectorAll('tbody')[0];
+        var updates = tbody.querySelectorAll('.ticker__table__cell--updated');
+        [].forEach.call(updates, function (item) {
+            item.classList.remove('ticker__table__cell--updated');
+        });
     },
 
     fetchLabels: function() {
