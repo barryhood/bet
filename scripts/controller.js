@@ -54,6 +54,7 @@ TickerController.prototype = {
         var that = this;
         setTimeout(function() {
             that._view.updateGrid(that._model._deltas[that._model._inc]);
+            that._view.updateCanvas();
             that._model._inc = that._model._inc < that._model._timers.length - 1 ? that._model._inc + 1 : 0;
             that.tickerTimer();
         }, this._model._timers[this._model._inc]);

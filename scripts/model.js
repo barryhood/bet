@@ -32,6 +32,18 @@ var TickerModel = function(elem) {
         row: 'ticker__table__row',
         cell: 'ticker__table__cell'
     }
+
+    this._canvas = this._elem.querySelectorAll('.ticker__canvas')[0];
+    this._canvasData = {
+        ctx: null,
+        minY: 0,
+        maxY: 700,
+        width: 0,
+        height: 0,
+        xPad: 10,
+        yPad: 10,
+        arr: []
+    }
 };
 
 TickerModel.prototype = {
