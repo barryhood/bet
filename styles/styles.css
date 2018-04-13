@@ -61,4 +61,7 @@
 .ticker__table__cell {
   border: 1px solid #999;
 }
+.ticker__table__cell--updated {
+  background: honeydew;
+}
 
