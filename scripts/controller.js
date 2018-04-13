@@ -11,9 +11,8 @@ TickerController.prototype = {
         var that = this;
         this.fetchData(this._snapshotUrl, this.snapshot.bind(this));
         this.fetchData(this._delatsUrl, this.deltas.bind(this));
-
-        this._model._dispatcher.addEventListener('grid:ready', function(e) {
-            //console.log('grid:ready', that, that._model._table);
+        // listen for initial grid render then start our ticker running
+        this._model._dispatcher.addEventListener(this._model._eventTypes.gridReady, function(e) {
             that.tickerTimer();
         });
     },

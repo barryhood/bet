@@ -1,12 +1,21 @@
 var TickerModel = function(elem) {
     this._elem = elem;
     this._dispatcher = this._elem;
-    this._table = null;
+
+    this._table = {};
+    this._table._tbody;
+
     this._labels = [];
     this._current = [];
     this._deltas = [];
     this._timers = [];
     this._inc = 0;
+
+    this._eventTypes = {
+        dataLoaded: 'data:loaded',
+        gridReady : 'grid:ready',
+        gridUpdated : 'grid:updated'
+    }
 };
 
 TickerModel.prototype = {
@@ -43,8 +52,11 @@ TickerModel.prototype = {
     },
     dataLoaded: function() {
         if (this._current.length && this._deltas.length) {
-            var event = new Event('data:loaded');
-            this._dispatcher.dispatchEvent(event);
+            this.dispatch(this._eventTypes.dataLoaded);
         }
+    },
+    dispatch: function(type) {
+        var event = new Event(type);
+        this._dispatcher.dispatchEvent(event);
     }
 };
