@@ -31,10 +31,16 @@ TickerView.prototype = {
         //console.log(tbody);
         var updatedRows = this.fetchTableRows(data, true);
         tbody.innerHTML = updatedRows;
-        // data.forEach(function(row) {
+        
+        setTimeout(function() {
+            var updates = tbody.querySelectorAll('.ticker__table__cell--will-update');
+            [].forEach.call(updates, function (item) {
+                item.classList.remove('ticker__table__cell--will-update');
+                item.classList.add('ticker__table__cell--updated');
+            });
+        }, 10);
 
-        // });
-
+        
         // do a settimeout 350ms and call a clean up to remove updated classes
         var event = new Event('grid:update');
         this._model._dispatcher.dispatchEvent(event);
@@ -61,7 +67,7 @@ TickerView.prototype = {
                     cell = that._model._current[rowInc][cellInc];
                 } else if(checkCurrent && cell !== that._model._current[rowInc][cellInc]) {
                     that._model._current[rowInc][cellInc] = cell;
-                    rowClass = ' ticker__table__cell--updated';
+                    rowClass = ' ticker__table__cell--will-update';
                 }
                 rowHtml += '<td class="ticker__table__cell' + rowClass + '">' + cell + '</td>';
             });
