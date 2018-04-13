@@ -11,6 +11,7 @@
     window.CustomEvent = CustomEvent;
 })();
 
+// Init our App passing in the ticker element
 var elem = document.querySelectorAll('.ticker')[0];
 var model = new TickerModel(elem),
     view = new TickerView(model),

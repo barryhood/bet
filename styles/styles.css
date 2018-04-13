@@ -13,10 +13,10 @@
 .ticker__table {
     border-collapse: collapse;
     border: 1px solid black;
-    table-layout: fixed;
     width: 100%;
     min-width: 600px;
     max-width: 1200px;
+    margin: 0 auto;
 }
 .ticker__table__title,
 .ticker__table__cell {
@@ -96,6 +96,7 @@
 .ticker__table__cell {
     border: 1px solid #999;
     position: relative;
+    transition: background 0.35s linear;
     /* overflow: hidden; */
 }
 .ticker__table__title:nth-child(3) span,
