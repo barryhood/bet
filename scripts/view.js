@@ -57,6 +57,7 @@ TickerView.prototype = {
                     tspan.classList.add(that._model._cssClasses.animateOut);
                     tcell.prepend(newspan);
                     newspan.classList.add(that._model._cssClasses.animateIn);
+                    that._model._current[rowInc][cellInc] = cell;
                 }
             });
         });
