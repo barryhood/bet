@@ -28,7 +28,18 @@ TickerView.prototype = {
             that._model._elem.insertAdjacentHTML('afterBegin', table);
             that._model._table = that._model._elem.querySelectorAll('.' + that._model._cssClasses.table)[0];
             that._model._table._tbody = that._model._table.querySelectorAll('tbody')[0];
+            that.setColours();
             that._model.dispatch(that._model._eventTypes.gridReady);
+        });
+    },
+
+    // Set some colours to act as a legend to our line graph
+    setColours: function() {
+        var that = this,
+        tbody = this._model._table._tbody;
+        this._model._canvasData.colours.forEach(function(colour, inc) {
+            var trow = tbody.querySelectorAll('tr')[inc];
+            trow.querySelectorAll('td')[0].style.color = colour;
         });
     },
 
@@ -100,97 +111,47 @@ TickerView.prototype = {
         return html;
     },
 
-    createCanvasArray: function() {
-
-    },
-
+    // Draws our canvas based on updates to current data set
     updateCanvas: function() {
         var that = this;
         var canvas = this._model._canvas;
         var canvasData = this._model._canvasData;
-        console.log(that._model._current[0][2]);
-return;
         if(that._model._inc === 0) {
             canvasData.arr = [];
         }
-
-        // /console.log(canvasData.arr.length);
-
         this._model._current.forEach(function(item, inc) {
-            //console.log(item[2]);
-            //console.log(inc);
-            // canvasData.arr[inc] = canvasData.arr && canvasData.arr[inc] ? canvasData.arr[inc] : [];
             if(!canvasData.arr || !canvasData.arr[inc]) {
                 canvasData.arr[inc] = [];
             }
-            canvasData.arr[inc].push(item[2]);
+            canvasData.arr[inc].push(item[3]);
         });
-   console.log(this._model._inc,that._model._deltas.length,canvasData.arr);
-        // reset array when we return to beginning
-
-
-        // canvasData.ctx = canvas.getContext('2d');
-
-
-        // canvasData.minY = 0;
-        // canvasData.maxY = 6;
-
-        canvas.style.width = '';
-        canvas.style.height = '';
-
-        //console.log(this._model._inc);
+        canvas.width = 'auto';
+        canvas.height = 'auto';  
+        canvas.width = canvas.clientWidth;
+        canvas.height = canvas.clientHeight;
         canvasData.width = canvas.clientWidth;
         canvasData.height = canvas.clientHeight;
-        canvas.style.width = canvasData.width + 'px';
-        canvas.style.height = canvasData.height + 'px';
-
-        // window.requestAnimationFrame(function() {
-
-        
         canvasData.ctx = canvas.getContext('2d');
-
-        // console.log(this.getCanvasXPixel(10));
-        canvasData.ctx.lineWidth = 1;
-        canvasData.ctx.strokeStyle = '#f00';
-        canvasData.ctx.beginPath();
-        canvasData.ctx.moveTo(0, 0);
-
-        // console.log(canvasData.xPad, that.getCanvasY(0));
-
-        for(var i = 1; i <= that._model._deltas.length; i ++) {
-
-
-            var pos = that._model._deltas[i-1][0][2];
-            
-            
-            //console.log(pos);
-            canvasData.ctx.lineTo(that.getCanvasX(i), that.getCanvasY(i/2));
-
-        }
-        canvasData.ctx.stroke();
-
-        // })
-        
-        // canvasData.ctx.beginPath();
-        // canvasData.ctx.moveTo(0,150);
-        // canvasData.ctx.lineTo(100,50);
-        // canvasData.ctx.lineTo(200,150);
-        // canvasData.ctx.stroke();
-
-        //console.log(canvas, ctx);
+        canvasData.ctx.clearRect(0, 0, canvasData.width, canvasData.height);
+        canvasData.ctx.lineWidth = 2;
+        canvasData.arr.forEach(function(item, inc) {
+            canvasData.ctx.strokeStyle = canvasData.colours[inc];
+            canvasData.ctx.beginPath();
+            canvasData.ctx.moveTo(that.getCanvasX(0), that.getCanvasY(item[0]));
+            item.forEach(function(data,dataInc) {
+                canvasData.ctx.lineTo(that.getCanvasX(dataInc), that.getCanvasY(item[dataInc]));
+            });
+            canvasData.ctx.stroke();
+        });
     },
+
+    // Pass in a value to return X position (this will be a simple increment)
     getCanvasX: function(val) {
-        // return (this._model._canvasData.width - this._model._canvasData.xPad) / this._model._deltas.length * val + (this._model._canvasData.xPad * 1.5);
-        return this._model._canvasData.width / this._model._deltas.length * val;
-        //return parseInt(((this._model._canvasData.width - this._model._canvasData.xPad) / this._model._deltas.length) * val, 10) - this._model._canvasData.xPad + .5;
-
+        return this._model._canvasData.width / (this._model._deltas.length-1) * val;
     },
+
+    // Pass in a value to return Y position (this will be our data)
     getCanvasY: function(val) {
-        val = val < 1 ? 1 : val;
-        //console.log(this._model._canvasData.height);
-        //return this._model._canvasData.height - (((this._model._canvasData.height - this._model._canvasData.yPad) / this._model._canvasData.maxY) * val) - this._model._canvasData.yPad;
-        return (((this._model._canvasData.height) / this._model._canvasData.maxY) * val);
-        // return 2; //this._model._canvasData.height / this._model._canvasData.maxY * val;//this._model._canvasData.height - ((this._model._canvasData.height / this._model._canvasData.maxY) * val);
-        
+        return (this._model._canvasData.height - (((this._model._canvasData.height) / this._model._canvasData.maxY) * val)) / 2;
     }
 };

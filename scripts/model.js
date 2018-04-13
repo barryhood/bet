@@ -37,12 +37,24 @@ var TickerModel = function(elem) {
     this._canvasData = {
         ctx: null,
         minY: 0,
-        maxY: 700,
+        maxY: 5,
         width: 0,
         height: 0,
         xPad: 10,
         yPad: 10,
-        arr: []
+        arr: [],
+        colours: [
+            'firebrick',
+            'coral',
+            'goldenrod',
+            'green',
+            'cornflowerblue',
+            'hotpink    ',
+            'indigo',
+            'mediumorchid',
+            'lawngreen',
+            'orangered'
+        ]
     }
 };
 
