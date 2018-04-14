@@ -1,0 +1,20 @@
+Initial View
+Load and parse the data in snapshot.csv into a model.
+
+Render a grid based on that data to the DOM.
+
+Updates
+Write an engine to work through deltas.csv and emit update messages to parse.
+
+When only a number exists on a line, that amount of time in milliseconds should 
+be waited until processing the next set of deltas. When the last set of deltas 
+is processed, return to the start of the file and repeat.
+
+Each set of deltas should be merged into the existing dataset and then 
+propagated to the DOM in the most efficient manner possible.
+
+Provide notification that an item has been updated via a visual flare in the UI.
+
+Bonus Task
+Render a chart in canvas based on the tick data to show the changes over time. 
+It should update on each tick.
