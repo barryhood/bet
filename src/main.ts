@@ -1,14 +1,6 @@
-// import { Greeter } from './scripts/greeter';
-
-// const g = new Greeter('BH');
-// g.greet();
-
-// console.log('webpack starter: started');
-
 import { TickerModel } from './scripts/model';
 import { TickerView } from './scripts/view';
 import { TickerController } from './scripts/controller';
-
 
 // polyfill custom event function for IE
 (function() {
@@ -24,10 +16,7 @@ import { TickerController } from './scripts/controller';
 })();
 
 // Init our App passing in the ticker element
-var elem = document.querySelectorAll('.ticker')[0];
-var model = new TickerModel(elem),
-  view = new TickerView(model),
-  controller = new TickerController(model, view);
-
-// var model = new TickerModel(elem);
-
+const elem = document.querySelectorAll('.ticker')[0];
+const model = new TickerModel(elem);
+const view = new TickerView(model);
+const controller = new TickerController(model, view);

@@ -1,19 +1,15 @@
-export var TickerView = function(model) {
-  this._model = model;
-  this.init();
-};
-
-TickerView.prototype = {
-  // Add listener for data loaded event and then trigger the method to draw the initial grid view
-  init: function() {
-      var that = this;
-      this._model._dispatcher.addEventListener(this._model._eventTypes.dataLoaded, function(e) {
-          that.drawInitialGrid();
-      });
-  },
+export class TickerView {
+  _model;
+  constructor(model) {
+    var that = this;
+    this._model = model;
+    this._model._dispatcher.addEventListener(this._model._eventTypes.dataLoaded, function(e) {
+        that.drawInitialGrid();
+    });
+  }
 
   // draw the initial grid view, once done fire an event to notify any listeners that the grid is ready
-  drawInitialGrid: function() {
+  drawInitialGrid() {
       var that = this,
           table =
               '<table class="' +
@@ -31,21 +27,21 @@ TickerView.prototype = {
           that.setColours();
           that._model.dispatch(that._model._eventTypes.gridReady);
       });
-  },
+  }
 
   // Set some colours to act as a legend to our line graph
-  setColours: function() {
+  setColours() {
       var that = this,
-      tbody = this._model._table._tbody;
+          tbody = this._model._table._tbody;
       this._model._canvasData.colours.forEach(function(colour, inc) {
           var trow = tbody.querySelectorAll('tr')[inc];
           trow.querySelectorAll('td')[0].style.color = colour;
       });
-  },
+  }
 
   // Called with latest delta by Controller after timed delay, updates grid with new data
   // handles clean up of old data once our CSS has transitioned it out
-  updateGrid: function(data) {
+  updateGrid(data) {
       var that = this,
           tbody = this._model._table._tbody;
       data.forEach(function(row, rowInc) {
@@ -85,20 +81,20 @@ TickerView.prototype = {
           that._model.dispatch(that._model._eventTypes.gridCleanup);
       }, 350);
       that._model.dispatch(that._model._eventTypes.gridUpdate);
-  },
+  }
 
   // Create and return the label/title structure for the grid
-  makeLabels: function() {
+  makeLabels() {
       var html = '',
           that = this;
       this._model._labels.forEach(function(label) {
           html += '<th class="' + that._model._cssClasses.title + '"><span>' + label + '</span></th>';
       });
       return html;
-  },
+  }
 
   // Creates and returns the initial grid structure based on snapshot data
-  makeTableRows: function(data) {
+  makeTableRows(data) {
       var html = '',
           that = this;
       data.forEach(function(row) {
@@ -109,24 +105,24 @@ TickerView.prototype = {
           html += '<tr class="' + that._model._cssClasses.row + '">' + rowHtml + '</tr>';
       });
       return html;
-  },
+  }
 
   // Draws our canvas based on updates to current data set
-  updateCanvas: function() {
+  updateCanvas() {
       var that = this;
       var canvas = this._model._canvas;
       var canvasData = this._model._canvasData;
-      if(that._model._inc === 0) {
+      if (that._model._inc === 0) {
           canvasData.arr = [];
       }
       this._model._current.forEach(function(item, inc) {
-          if(!canvasData.arr || !canvasData.arr[inc]) {
+          if (!canvasData.arr || !canvasData.arr[inc]) {
               canvasData.arr[inc] = [];
           }
           canvasData.arr[inc].push(item[3]);
       });
       canvas.width = 'auto';
-      canvas.height = 'auto';  
+      canvas.height = 'auto';
       canvas.width = canvas.clientWidth;
       canvas.height = canvas.clientHeight;
       canvasData.width = canvas.clientWidth;
@@ -138,20 +134,22 @@ TickerView.prototype = {
           canvasData.ctx.strokeStyle = canvasData.colours[inc];
           canvasData.ctx.beginPath();
           canvasData.ctx.moveTo(that.getCanvasX(0), that.getCanvasY(item[0]));
-          item.forEach(function(data,dataInc) {
+          item.forEach(function(data, dataInc) {
               canvasData.ctx.lineTo(that.getCanvasX(dataInc), that.getCanvasY(item[dataInc]));
           });
           canvasData.ctx.stroke();
       });
-  },
+  }
 
   // Pass in a value to return X position (this will be a simple increment)
-  getCanvasX: function(val) {
-      return this._model._canvasData.width / (this._model._deltas.length-1) * val;
-  },
+  getCanvasX(val) {
+      return this._model._canvasData.width / (this._model._deltas.length - 1) * val;
+  }
 
   // Pass in a value to return Y position (this will be our data)
-  getCanvasY: function(val) {
-      return (this._model._canvasData.height - (((this._model._canvasData.height) / this._model._canvasData.maxY) * val)) / 2;
+  getCanvasY(val) {
+      return (
+          (this._model._canvasData.height - this._model._canvasData.height / this._model._canvasData.maxY * val) / 2
+      );
   }
 };
