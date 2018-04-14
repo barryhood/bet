@@ -1,8 +1,6 @@
 export class TickerController {
   _model;
   _view;
-//   _snapshotUrl = './data/snapshot.csv';
-//   _deltasUrl = './data/deltas.csv';
   constructor(model, view) {
     var that = this;
     this._model = model;

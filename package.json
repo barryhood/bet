@@ -20,6 +20,7 @@
     "@types/jasmine": "2.5.40",
     "@types/node": "7.0.0",
     "awesome-typescript-loader": "3.0.0-beta.18",
+    "copy-webpack-plugin": "^4.5.1",
     "jasmine-core": "2.5.2",
     "karma": "1.4.0",
     "karma-jasmine": "1.1.0",

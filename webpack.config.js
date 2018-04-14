@@ -4,6 +4,17 @@ const webpack = require('webpack');
 const ROOT = path.resolve( __dirname, 'src' );
 const DESTINATION = path.resolve( __dirname, 'dist' );
 
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
+// const config.plugins = config.plugins.concat([
+//     new CopyWebpackPlugin([
+//       { from: 'client/assets', to: 'assets' }
+// ]),
+
+const config = {
+
+  }
+
 module.exports = {
     context: ROOT,
 
@@ -17,7 +28,7 @@ module.exports = {
     },
 
     resolve: {
-        extensions: ['.ts', '.js'],
+        extensions: ['.ts', '.js', '.css'],
         modules: [
             ROOT,
             'node_modules'
@@ -51,6 +62,14 @@ module.exports = {
             }
         ]
     },
+
+    plugins: [
+        new CopyWebpackPlugin([
+          { from: ROOT + '/styles', to: DESTINATION + '/styles' },
+          { from: ROOT + '/data', to: DESTINATION + '/data' },
+          { from: ROOT + '/*.html', to: DESTINATION }
+         ])
+    ],
 
     devtool: 'cheap-module-source-map',
     devServer: {}
