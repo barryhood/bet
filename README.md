@@ -1,12 +1,37 @@
-# bet
+Bet365 Technical Test
+---
 
-Install http-server:
+## Instructions
 
-`npm install http-server -g`
-https://www.npmjs.com/package/http-server
+The src files for the project (typescript, CSS and HTML files) are all located under `./src`. 
 
-Run http-server:
 
-`http-server [path] [options]`
+## Install dependencies via NPM
 
-Default path is ./ (i.e. run from root)
+The project uses Webpack to compile the Typescript files. Install the dependencies in order to view in browser by running an npm install from the root directory:
+
+`$ npm i`
+
+Once installed, run:
+
+`$ npm start`
+
+The project should then be available on `http://localhost:9000/` by default.
+
+
+## Build your app without minification
+
+In order to build the production files (with typescript transpiled but unminified) to the /dist directory, run:
+
+`$ npm run build`
+
+Or to minify the typescript:
+
+`$ npm run build.prod`
+
+
+## Unit tests
+
+I have included a couple of example unit tests (in `./src/scripts/ticker.specs.ts`), these can be run as follows:
+
+`$ npm run test`
