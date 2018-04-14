@@ -45,22 +45,22 @@
 .ticker__table__row.ticker__table__row--decrease td:nth-child(3),
 .ticker__table__row.ticker__table__row--decrease td:nth-child(4),
 .ticker__table__row.ticker__table__row--decrease td:nth-child(5) {
-  background: rgba(255,228,225,0.75);
+  background: rgba(255,208,205,0.75);
 }
 .ticker__table__row.ticker__table__row--increase td:nth-child(3),
 .ticker__table__row.ticker__table__row--increase td:nth-child(4),
 .ticker__table__row.ticker__table__row--increase td:nth-child(5) {
-  background: honeydew;
+  background: rgba(208,255,208,0.75);;
 }
 .ticker__table__row.ticker__table__row--decrease:hover td:nth-child(3),
 .ticker__table__row.ticker__table__row--decrease:hover td:nth-child(4),
 .ticker__table__row.ticker__table__row--decrease:hover td:nth-child(5) {
-  background: rgba(240,255,240, 0.75);
+  background: rgba(255,208,205,0.5);
 }
 .ticker__table__row.ticker__table__row--increase:hover td:nth-child(3),
 .ticker__table__row.ticker__table__row--increase:hover td:nth-child(4),
 .ticker__table__row.ticker__table__row--increase:hover td:nth-child(5) {
-  background: rgba(240,255,240, 0.5);
+  background: rgba(208,255,208,0.45);
 }
 .ticker__table__title {
     color: white;
