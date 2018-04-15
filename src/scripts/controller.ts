@@ -1,20 +1,20 @@
 export class TickerController {
-  _model;
-  _view;
-  constructor(model, view) {
+  _model: any;
+  _view: any;
+  constructor(model: any, view: any) {
     var that = this;
     this._model = model;
     this._view = view;
     // call our fetchData method on the two CSV files then listen for the dispatcher to notify that the data is available
     this.fetchData(this._model._snapshotUrl, this.snapshot.bind(this));
     this.fetchData(this._model._deltasUrl, this.deltas.bind(this));
-    this._model._dispatcher.addEventListener(this._model._eventTypes.gridReady, function(e) {
+    this._model._dispatcher.addEventListener(this._model._eventTypes.gridReady, function(e: Event) {
         that.tickerTimer();
     });
   }
 
   // fetches our CSV data, accepts a URL and a success callback as parameters
-  fetchData(url, callback) {
+  fetchData(url: string, callback: any) {
       var request = new XMLHttpRequest(),
           that = this;
       request.open('GET', url, true);
@@ -31,17 +31,17 @@ export class TickerController {
   }
 
   // error handling for data issues would happen here
-  handleError(text, status) {
+  handleError(text: string, status: string) {
       console.log(text, status);
   }
 
   // populate the initial snapshot data in the model
-  snapshot(data) {
+  snapshot(data: string) {
       this._model.addSnapshot(data);
   }
 
   // populate our deltas data in the mode
-  deltas(data) {
+  deltas(data: string) {
       this._model.addDeltas(data);
   }
 

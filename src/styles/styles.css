@@ -9,7 +9,8 @@
     width: 100%;
 }
 .ticker__table {
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     border: 1px solid #999;
     width: 100%;
     min-width: 600px;
@@ -50,7 +51,7 @@
 .ticker__table__row.ticker__table__row--increase td:nth-child(3),
 .ticker__table__row.ticker__table__row--increase td:nth-child(4),
 .ticker__table__row.ticker__table__row--increase td:nth-child(5) {
-  background: honeydew;
+  background: rgba(240,255,240, 0.95);
 }
 .ticker__table__row.ticker__table__row--decrease:hover td:nth-child(3),
 .ticker__table__row.ticker__table__row--decrease:hover td:nth-child(4),
@@ -98,6 +99,7 @@
     border: 1px solid #999;
     position: relative;
     transition: background 0.35s linear;
+    background: transparent;
 }
 .ticker__table__title:nth-child(3) span,
 .ticker__table__title:nth-child(4) span {
@@ -105,9 +107,6 @@
 }
 .ticker__table__title:nth-child(5) span {
   min-width: 80px;
-}
-.ticker__table__cell--updated {
-    background: honeydew;
 }
 .animate-in,
 .animate-out {

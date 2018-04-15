@@ -1,9 +1,9 @@
 export class TickerView {
-  _model;
-  constructor(model) {
+  _model: any;
+  constructor(model: any) {
     var that = this;
     this._model = model;
-    this._model._dispatcher.addEventListener(this._model._eventTypes.dataLoaded, function(e) {
+    this._model._dispatcher.addEventListener(this._model._eventTypes.dataLoaded, function(e: Event) {
         that.drawInitialGrid();
     });
   }
@@ -33,7 +33,7 @@ export class TickerView {
   setColours() {
       var that = this,
           tbody = this._model._table._tbody;
-      this._model._canvasData.colours.forEach(function(colour, inc) {
+      this._model._canvasData.colours.forEach(function(colour: string, inc: number) {
           var trow = tbody.querySelectorAll('tr')[inc];
           trow.querySelectorAll('td')[0].style.color = colour;
       });
@@ -41,15 +41,15 @@ export class TickerView {
 
   // Called with latest delta by Controller after timed delay, updates grid with new data
   // handles clean up of old data once our CSS has transitioned it out
-  updateGrid(data) {
+  updateGrid(data: any[]) {
       var that = this,
           tbody = this._model._table._tbody;
-      data.forEach(function(row, rowInc) {
+      data.forEach(function(row: any, rowInc: number) {
           var trow = tbody.querySelectorAll('tr')[rowInc];
           trow.classList.remove(that._model._cssClasses.rowDecrease);
           trow.classList.remove(that._model._cssClasses.rowIncrease);
 
-          row.forEach(function(cell, cellInc) {
+          row.forEach(function(cell: any, cellInc: number) {
               if (cell !== '' && cell !== that._model._current[rowInc][cellInc]) {
                   var rowClass =
                       parseFloat(cell) < parseFloat(that._model._current[rowInc][cellInc])
@@ -60,9 +60,8 @@ export class TickerView {
                   var tspan = tcell.querySelectorAll('span')[0];
                   var newspan = document.createElement('span');
                   newspan.textContent = cell;
-
                   tspan.classList.add(that._model._cssClasses.animateOut);
-                  tcell.prepend(newspan);
+                  tcell.insertBefore(newspan, tspan);
                   newspan.classList.add(that._model._cssClasses.animateIn);
                   that._model._current[rowInc][cellInc] = cell;
               }
@@ -70,7 +69,7 @@ export class TickerView {
       });
       setTimeout(function() {
           var cells = tbody.querySelectorAll('td');
-          [].forEach.call(cells, function(cell) {
+          [].forEach.call(cells, function(cell: Element) {
               var oldCell = cell.querySelectorAll('.' + that._model._cssClasses.animateOut)[0];
               var newCell = cell.querySelectorAll('.' + that._model._cssClasses.animateIn)[0];
               if (!!oldCell && !!newCell) {
@@ -87,17 +86,17 @@ export class TickerView {
   makeLabels() {
       var html = '',
           that = this;
-      this._model._labels.forEach(function(label) {
+      this._model._labels.forEach(function(label: string) {
           html += '<th class="' + that._model._cssClasses.title + '"><span>' + label + '</span></th>';
       });
       return html;
   }
 
   // Creates and returns the initial grid structure based on snapshot data
-  makeTableRows(data) {
+  makeTableRows(data: any[]) {
       var html = '',
           that = this;
-      data.forEach(function(row) {
+      data.forEach(function(row: any[]) {
           var rowHtml = '';
           row.forEach(function(cell) {
               rowHtml += '<td class="' + that._model._cssClasses.cell + '"><span>' + cell + '</span></td>';
@@ -115,7 +114,7 @@ export class TickerView {
       if (that._model._inc === 0) {
           canvasData.arr = [];
       }
-      this._model._current.forEach(function(item, inc) {
+      this._model._current.forEach(function(item: any, inc: number) {
           if (!canvasData.arr || !canvasData.arr[inc]) {
               canvasData.arr[inc] = [];
           }
@@ -130,11 +129,11 @@ export class TickerView {
       canvasData.ctx = canvas.getContext('2d');
       canvasData.ctx.clearRect(0, 0, canvasData.width, canvasData.height);
       canvasData.ctx.lineWidth = 2;
-      canvasData.arr.forEach(function(item, inc) {
+      canvasData.arr.forEach(function(item: number[], inc: number) {
           canvasData.ctx.strokeStyle = canvasData.colours[inc];
           canvasData.ctx.beginPath();
           canvasData.ctx.moveTo(that.getCanvasX(0), that.getCanvasY(item[0]));
-          item.forEach(function(data, dataInc) {
+          item.forEach(function(data: number, dataInc: number): void {
               canvasData.ctx.lineTo(that.getCanvasX(dataInc), that.getCanvasY(item[dataInc]));
           });
           canvasData.ctx.stroke();
@@ -142,12 +141,12 @@ export class TickerView {
   }
 
   // Pass in a value to return X position (this will be a simple increment)
-  getCanvasX(val) {
+  getCanvasX(val: number) {
       return this._model._canvasData.width / (this._model._deltas.length - 1) * val;
   }
 
   // Pass in a value to return Y position (this will be our data)
-  getCanvasY(val) {
+  getCanvasY(val: number) {
       return (
           (this._model._canvasData.height - this._model._canvasData.height / this._model._canvasData.maxY * val) / 2
       );

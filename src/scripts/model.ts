@@ -1,52 +1,49 @@
 export class TickerModel {
     // Our element is cached here
-    _elem;
-    _dispatcher;
-    _snapshotUrl = './data/snapshot.csv';
-    _deltasUrl = './data/deltas.csv';
+    _elem: Element;
+    _dispatcher: Element;
+    _snapshotUrl: string = './data/snapshot.csv';
+    _deltasUrl: string = './data/deltas.csv';
 
-    // // Empty containers to cache the rendered table
-    _table = {};
-    _tbody = {};
+    // Empty containers to cache the rendered table
+    _table: Element;
+    _tbody: Element;
 
-    // // Data containers
-    _labels = [];
-    _current = [];
-    _deltas = [];
-    _timers = [];
-    _inc = 0;
+    // Data containers
+    _labels: string[] = [];
+    _current: any[] = [];
+    _deltas: any[] = [];
+    _timers: number[] = [];
+    _inc: number = 0;
 
-    // // Events that methods can listen for
+    // Events that methods can listen for
     _eventTypes = {
-        dataLoaded: 'data:loaded',
-        gridReady: 'grid:ready',
-        gridUpdated: 'grid:updated',
-        gridCleanup: 'grid:cleaned'
+        dataLoaded: <string>'data:loaded',
+        gridReady: <string>'grid:ready',
+        gridUpdated: <string>'grid:updated',
+        gridCleanup: <string>'grid:cleaned'
     };
-    // // CSS class names
+    // CSS class names
     _cssClasses = {
-        table: 'ticker__table',
-        rowDecrease: 'ticker__table__row--decrease',
-        rowIncrease: 'ticker__table__row--increase',
-        animateOut: 'animate-out',
-        animateIn: 'animate-in',
-        title: 'ticker__table__title',
-        row: 'ticker__table__row',
-        cell: 'ticker__table__cell'
+        table: <string>'ticker__table',
+        rowDecrease: <string>'ticker__table__row--decrease',
+        rowIncrease: <string>'ticker__table__row--increase',
+        animateOut: <string>'animate-out',
+        animateIn: <string>'animate-in',
+        title: <string>'ticker__table__title',
+        row: <string>'ticker__table__row',
+        cell: <string>'ticker__table__cell'
     };
 
-    // this._canvas = this._elem.querySelectorAll('.ticker__canvas')[0];
-    _canvas;
+    _canvas: Element;
     _canvasData = {
-        ctx: null,
-        minY: 0,
-        maxY: 5,
-        width: 0,
-        height: 0,
-        xPad: 10,
-        yPad: 10,
-        arr: [],
-        colours: [
+        ctx: <any>null,
+        minY: <number>0,
+        maxY: <number>5,
+        width: <number>0,
+        height: <number>0,
+        arr: <number[]>[],
+        colours: <string[]>[
             'firebrick',
             'coral',
             'goldenrod',
@@ -59,18 +56,18 @@ export class TickerModel {
             'orangered'
         ]
     };
-    constructor(elem) {
+    constructor(elem: any) {
         this._elem = elem;
         this._dispatcher = this._elem;
         this._canvas = this._elem.querySelectorAll('.ticker__canvas')[0];
     }
 
     // Store labels and initial data set
-    addSnapshot(data) {
+    addSnapshot(data: string) {
         var rows = data.split(/\r\n|\r|\n/),
             that = this;
         this._labels = rows.shift().split(',');
-        rows.forEach(function(row) {
+        rows.forEach(function(row: any) {
             if (row) {
                 that._current.push(row.split(','));
             }
@@ -78,12 +75,12 @@ export class TickerModel {
         this.dataLoaded();
     }
     // Store additional data sets
-    addDeltas(data) {
+    addDeltas(data: string) {
         var rows = data.split(/\r\n|\r|\n/),
             that = this;
         var inc = 0;
         that._deltas[0] = [];
-        rows.forEach(function(row) {
+        rows.forEach(function(row: any) {
             if (row) {
                 row = row.split(',');
                 if (row.length === 1) {
@@ -105,7 +102,7 @@ export class TickerModel {
         }
     }
     // Handle event dispatches
-    dispatch(type) {
+    dispatch(type: string) {
         var event = new Event(type);
         this._dispatcher.dispatchEvent(event);
     }
